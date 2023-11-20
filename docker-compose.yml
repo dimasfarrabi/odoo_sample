@@ -1,0 +1,26 @@
+version: "2"
+services:
+  web:
+    image: odoo:15.0
+    depends_on:
+      - db
+    ports:
+      - "10001:8069"
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+    restart: always
+  db:
+    image: postgres:12
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgata
+    restart: always
+volumes:
+  odoo-web-data:
+  odoo-db-data:
